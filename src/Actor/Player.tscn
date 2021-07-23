@@ -1,0 +1,560 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://assets/light.png" type="Texture" id=1]
+[ext_resource path="res://src/Actor/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/charactor/char_07.png" type="Texture" id=3]
+[ext_resource path="res://assets/Fall_damage_big.ogg" type="AudioStream" id=4]
+[ext_resource path="res://assets/charactor/char_09.png" type="Texture" id=5]
+[ext_resource path="res://assets/charactor/char_08.png" type="Texture" id=7]
+[ext_resource path="res://assets/Gun1.ogg" type="AudioStream" id=8]
+[ext_resource path="res://assets/charactor/char_10.png" type="Texture" id=9]
+[ext_resource path="res://assets/charactor/char_12.png" type="Texture" id=10]
+[ext_resource path="res://assets/charactor/char_11.png" type="Texture" id=11]
+[ext_resource path="res://assets/charactor/char_02.png" type="Texture" id=12]
+[ext_resource path="res://assets/charactor/char_06.png" type="Texture" id=13]
+[ext_resource path="res://assets/charactor/char_01.png" type="Texture" id=14]
+[ext_resource path="res://assets/charactor/char_03.png" type="Texture" id=15]
+[ext_resource path="res://assets/charactor/char_04.png" type="Texture" id=16]
+[ext_resource path="res://assets/charactor/char_05.png" type="Texture" id=17]
+[ext_resource path="res://assets/charactor/Shadow.png" type="Texture" id=18]
+[ext_resource path="res://assets/animeation/attack/Attack7_07.png" type="Texture" id=19]
+[ext_resource path="res://assets/animeation/attack/Attack7_02.png" type="Texture" id=20]
+[ext_resource path="res://assets/animeation/attack/Attack7_04.png" type="Texture" id=21]
+[ext_resource path="res://assets/animeation/attack/Attack7_01.png" type="Texture" id=22]
+[ext_resource path="res://assets/animeation/attack/Attack7_03.png" type="Texture" id=23]
+[ext_resource path="res://assets/animeation/attack/Attack7_05.png" type="Texture" id=24]
+[ext_resource path="res://assets/Damage1.ogg" type="AudioStream" id=25]
+[ext_resource path="res://assets/Item1.ogg" type="AudioStream" id=26]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "left",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 7 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "right",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 11 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "top",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 12 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "down",
+"speed": 6.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 19 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 23 ), ExtResource( 21 ), ExtResource( 24 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 83.4099, 83.4098 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 20, 21 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.901961, 0, 0, 1 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 24, 24 )
+
+[node name="Player" type="KinematicBody2D"]
+z_index = 3
+collision_mask = 10
+script = ExtResource( 2 )
+speed = Vector2( 275, 275 )
+
+[node name="Shadow" type="Sprite" parent="."]
+position = Vector2( -2.98023e-08, -10 )
+scale = Vector2( 1.28125, 1.3125 )
+texture = ExtResource( 18 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 106, -65 )
+scale = Vector2( 0.0357513, 0.0362934 )
+enabled = false
+texture = ExtResource( 1 )
+color = Color( 0.976471, 0.823529, 0, 1 )
+energy = 2.0
+
+[node name="Player" type="AnimatedSprite" parent="."]
+position = Vector2( 3.8147e-06, -18 )
+scale = Vector2( 1.43006, 1.35194 )
+frames = SubResource( 1 )
+animation = "down"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Attack" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -18 )
+scale = Vector2( 0.317708, 0.317708 )
+z_index = 10
+frames = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AttackArea" type="Area2D" parent="Attack"]
+scale = Vector2( 0.2, 0.2 )
+collision_layer = 1024
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack/AttackArea"]
+position = Vector2( 1.57376, 1.57375 )
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -18 )
+shape = SubResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ViewNow" type="Camera2D" parent="."]
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -18 )
+z_index = 50
+current = true
+
+[node name="invMneu" type="Panel" parent="Camera2D"]
+visible = false
+margin_left = -145.0
+margin_top = 98.0
+margin_right = 146.0
+margin_bottom = 217.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Camera2D/invMneu"]
+margin_left = 12.0
+margin_top = 37.0
+margin_right = 61.0
+margin_bottom = 51.0
+text = "Wood : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Camera2D/invMneu"]
+margin_left = 13.0
+margin_top = 56.0
+margin_right = 61.0
+margin_bottom = 70.0
+text = "Stone : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wood" type="Label" parent="Camera2D/invMneu"]
+margin_left = 60.0
+margin_top = 37.0
+margin_right = 72.0
+margin_bottom = 51.0
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stone" type="Label" parent="Camera2D/invMneu"]
+margin_left = 60.0
+margin_top = 56.0
+margin_right = 73.0
+margin_bottom = 70.0
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Camera2D/invMneu"]
+margin_left = 17.0
+margin_top = 73.0
+margin_right = 61.0
+margin_bottom = 87.0
+text = "Rope : "
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rope" type="Label" parent="Camera2D/invMneu"]
+margin_left = 59.0
+margin_top = 74.0
+margin_right = 73.0
+margin_bottom = 88.0
+text = "0"
+align = 1
+valign = 1
+
+[node name="Label4" type="Label" parent="Camera2D/invMneu"]
+margin_left = 115.0
+margin_top = 8.0
+margin_right = 176.0
+margin_bottom = 22.0
+text = "Inventory"
+
+[node name="escMenu" type="Panel" parent="Camera2D"]
+pause_mode = 2
+visible = false
+margin_left = -93.0
+margin_top = -147.0
+margin_right = 95.0
+margin_bottom = 118.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit" type="Button" parent="Camera2D/escMenu"]
+margin_left = 32.0
+margin_top = 218.0
+margin_right = 155.0
+margin_bottom = 245.0
+text = "Exit Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="continue" type="Button" parent="Camera2D/escMenu"]
+margin_left = 33.0
+margin_top = 46.0
+margin_right = 155.0
+margin_bottom = 72.0
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Camera2D/escMenu"]
+margin_left = 59.0
+margin_top = 13.0
+margin_right = 105.0
+margin_bottom = 27.0
+rect_scale = Vector2( 1.5, 1.5 )
+text = "Paused"
+align = 1
+
+[node name="musicSound" type="HSlider" parent="Camera2D/escMenu"]
+margin_left = 54.0
+margin_top = 108.0
+margin_right = 134.0
+margin_bottom = 124.0
+min_value = -80.0
+max_value = 5.0
+value = -2.0
+tick_count = 5
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Camera2D/escMenu"]
+margin_left = 53.0
+margin_top = 93.0
+margin_right = 134.0
+margin_bottom = 107.0
+text = "Music Sound"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Camera2D/escMenu"]
+margin_left = 55.0
+margin_top = 127.0
+margin_right = 133.0
+margin_bottom = 141.0
+text = "Effect Sound"
+
+[node name="effectSound" type="HSlider" parent="Camera2D/escMenu"]
+margin_left = 53.0
+margin_top = 144.0
+margin_right = 132.0
+margin_bottom = 160.0
+min_value = -80.0
+max_value = 5.0
+value = -7.0
+tick_count = 5
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Camera2D"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -29.0
+margin_top = -223.0
+margin_right = 2.0
+margin_bottom = -209.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Time"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Camera2D"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -25.0
+margin_top = -199.0
+margin_right = 15.0
+margin_bottom = -185.0
+rect_scale = Vector2( 1.3, 1.3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "00:00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Panel" parent="Camera2D"]
+margin_left = -463.0
+margin_top = -221.0
+margin_right = -341.0
+margin_bottom = -193.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hp1" type="Panel" parent="Camera2D/Health"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 41.0
+margin_bottom = 25.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="hp2" type="Panel" parent="Camera2D/Health"]
+margin_left = 42.0
+margin_top = 3.0
+margin_right = 80.0
+margin_bottom = 25.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hp3" type="Panel" parent="Camera2D/Health"]
+margin_left = 81.0
+margin_top = 3.0
+margin_right = 119.0
+margin_bottom = 25.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mission" type="Panel" parent="Camera2D"]
+margin_left = -465.0
+margin_top = 142.0
+margin_right = -354.0
+margin_bottom = 227.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="st" type="Label" parent="Camera2D/Mission"]
+margin_left = 12.0
+margin_top = 24.0
+margin_right = 56.0
+margin_bottom = 38.0
+text = "Stone: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wd" type="Label" parent="Camera2D/Mission"]
+margin_left = 11.0
+margin_top = 37.0
+margin_right = 56.0
+margin_bottom = 51.0
+text = "Wood: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rp" type="Label" parent="Camera2D/Mission"]
+margin_left = 16.0
+margin_top = 50.0
+margin_right = 56.0
+margin_bottom = 64.0
+text = "Rope: "
+
+[node name="ene" type="Label" parent="Camera2D/Mission"]
+margin_left = 5.0
+margin_top = 66.0
+margin_right = 52.0
+margin_bottom = 80.0
+text = "Enemy:"
+
+[node name="title" type="Label" parent="Camera2D/Mission"]
+margin_left = 32.0
+margin_top = 3.0
+margin_right = 82.0
+margin_bottom = 17.0
+text = "Mission"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="st_amount" type="Label" parent="Camera2D/Mission"]
+margin_left = 55.0
+margin_top = 24.0
+margin_right = 65.0
+margin_bottom = 38.0
+text = "0"
+align = 1
+valign = 1
+
+[node name="wd_amount" type="Label" parent="Camera2D/Mission"]
+margin_left = 55.0
+margin_top = 37.0
+margin_right = 66.0
+margin_bottom = 51.0
+rect_pivot_offset = Vector2( -20, 18 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rp_amount" type="Label" parent="Camera2D/Mission"]
+margin_left = 55.0
+margin_top = 50.0
+margin_right = 66.0
+margin_bottom = 64.0
+rect_pivot_offset = Vector2( -20, 18 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ene_amount" type="Label" parent="Camera2D/Mission"]
+margin_left = 55.0
+margin_top = 67.0
+margin_right = 66.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( -20, 18 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Camera2D/Mission"]
+margin_left = 79.0
+margin_top = 37.0
+margin_right = 108.0
+margin_bottom = 51.0
+text = "/100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Camera2D/Mission"]
+margin_left = 79.0
+margin_top = 24.0
+margin_right = 108.0
+margin_bottom = 38.0
+text = "/100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Camera2D/Mission"]
+margin_left = 78.0
+margin_top = 50.0
+margin_right = 107.0
+margin_bottom = 64.0
+text = "/100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Camera2D/Mission"]
+margin_left = 78.0
+margin_top = 67.0
+margin_right = 107.0
+margin_bottom = 81.0
+text = "/14"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+modulate = Color( 0.0980392, 0, 0.458824, 1 )
+position = Vector2( 0, -18 )
+shape = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="attackEffect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 25 )
+volume_db = -7.0
+
+[node name="Knockback" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="onFire" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="guiEffect" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 26 )
+volume_db = -7.0
+
+[connection signal="body_entered" from="Attack/AttackArea" to="." method="_on_AttackArea_body_entered"]
+[connection signal="pressed" from="Camera2D/escMenu/exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Camera2D/escMenu/continue" to="." method="_on_continue_pressed"]
+[connection signal="value_changed" from="Camera2D/escMenu/musicSound" to="." method="_on_musicSound_value_changed"]
+[connection signal="value_changed" from="Camera2D/escMenu/effectSound" to="." method="_on_effectSound_value_changed"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
